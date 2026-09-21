@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* ─────────────────────────── Design tokens ─────────────────────────── */
+@theme {
+  --color-navy: #0b2b35;
+  --color-navy-deep: #08232c;
+  --color-teal: #0f8b8d;
+  --color-teal-dark: #0b7173;
+  --color-teal-soft: #ddf4f1;
+  --color-cream: #f8f7f2;
+  --color-ink: #17343b;
+  --color-muted: #64777c;
+  --color-line: #e4e9e7;
+  --color-emergency: #d94b4b;
+  --color-emergency-dark: #bf3a3a;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-lora), Georgia, serif;
+  --font-script: var(--font-caveat), cursive;
+
+  --radius-card: 1.25rem;
+  --radius-panel: 2rem;
+
+  --shadow-soft: 0 1px 2px rgb(11 43 53 / 0.04), 0 8px 24px -12px rgb(11 43 53 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(11 43 53 / 0.04), 0 24px 48px -20px rgb(11 43 53 / 0.25);
+  --shadow-float: 0 20px 50px -18px rgb(8 35 44 / 0.35);
+
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+/* ─────────────────────────── Base ─────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--color-navy);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-teal-soft);
+    color: var(--color-navy);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Editorial serif for page and section titles. Kept outside @layer on purpose:
+   unlayered rules win over utilities, so every h1/h2 shares one weight. */
+h1,
+h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* ─────────────────────────── Utilities ─────────────────────────── */
+/* Page gutter: side padding + where full-bleed sections align with the container. */
+:root {
+  --pad: 1.25rem;
+  --edge: max(var(--pad), calc((100vw - 90rem) / 2 + var(--pad)));
+}
+@media (width >= 40rem) {
+  :root {
+    --pad: 1.75rem;
+  }
+}
+@media (width >= 80rem) {
+  :root {
+    --pad: 2.5rem;
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+@utility section-y {
+  padding-block: 4.5rem;
+  @media (width >= 64rem) {
+    padding-block: 7rem;
+  }
+}
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-teal);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─────────────────────────── Reveal on scroll ───────────────────────────
+   Content is always visible without JS; the observer adds `reveal-ready`
+   to <html> and then animates elements in as they enter the viewport. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float-soft {
+  animation: float-soft 6s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgb(217 75 75 / 0.55); }
+  80%, 100% { box-shadow: 0 0 0 10px rgb(217 75 75 / 0); }
+}
+.animate-pulse-ring {
+  animation: pulse-ring 2.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
