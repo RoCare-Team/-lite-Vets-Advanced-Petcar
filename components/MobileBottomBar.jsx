@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Phone, CalendarCheck } from "lucide-react";
 import { WhatsAppIcon } from "./ui/BrandIcons";
 import { bookingLink, site, whatsappLink } from "@/lib/site";
@@ -31,15 +32,13 @@ export default function MobileBottomBar() {
           </a>
         </li>
         <li>
-          <a
+          <Link
             href={bookingLink}
-            target="_blank"
-            rel="noopener noreferrer"
             className="flex h-12 items-center justify-center gap-2 rounded-full bg-teal px-3 text-sm font-semibold text-white shadow-[0_10px_20px_-10px_rgb(15_139_141/0.8)] active:bg-teal-dark"
           >
             <CalendarCheck aria-hidden="true" className="size-4" />
             Book Appointment
-          </a>
+          </Link>
         </li>
       </ul>
     </nav>

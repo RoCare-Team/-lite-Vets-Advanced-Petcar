@@ -180,3 +180,23 @@ h2 {
     transform: none;
   }
 }
+
+/* ─────────────────────────── Booking modal ─────────────────────────── */
+@keyframes modal-fade {
+  from { opacity: 0; }
+}
+@keyframes modal-rise {
+  from { opacity: 0; transform: translateY(24px) scale(0.98); }
+}
+.modal-backdrop {
+  animation: modal-fade 200ms ease-out;
+}
+.modal-panel {
+  animation: modal-rise 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop,
+  .modal-panel {
+    animation: none;
+  }
+}

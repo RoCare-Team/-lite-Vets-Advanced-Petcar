@@ -4,3 +4,6 @@ out
 .env*.local
 npm-debug.log*
 .DS_Store
+
+# Bookings, admin content and uploads (runtime data)
+storage

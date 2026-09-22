@@ -12,7 +12,8 @@ npm run build && npm start
 
 | What | File |
 | --- | --- |
-| Phone, email, address, social links, WhatsApp booking link | `lib/site.js` |
+| Phone, email, address, social links | `lib/site.js` |
+| Homepage hero, service tiles, bookable services, clinics & slots | **Admin panel** at `/admin` (first-run defaults in `data/defaults.js`) |
 | Design tokens (colours, radii, shadows, font) | `app/globals.css` (`@theme`) |
 | Services (all copy from the original site) | `data/services.js` |
 | Team | `data/team.js` |
@@ -42,8 +43,29 @@ canonical URLs. They are served by `app/services/[slug]` through rewrites in `ne
 Old PHP URLs (`/index.php`, `/gallery.php`, `/elite-video-gallery`, the "why choose us" slugs) redirect
 to their new equivalents.
 
-## Forms
+## Online booking & admin
 
-There is no backend. Appointment requests and the Donor Registry open WhatsApp with a prefilled
-message; the newsletter and job applications open the visitor's email app addressed to
-theelitevets@gmail.com. Swap these for API calls when a backend exists.
+- `/book` — visitors choose clinic → service → date → time slot → their details. Slots come from each
+  clinic's hours, break, slot length and "bookings per slot"; full, past and holiday slots are disabled.
+  Every booking gets an ID like `EV-7K2QMX`.
+- `/admin` — sign in with `ADMIN_PASSWORD`. Manage bookings (confirm / complete / cancel, WhatsApp the
+  customer, export CSV), clinics & slot rules, and the homepage hero (heading, tiles, badges, photos with
+  upload) plus the list of bookable services.
+
+Set these in `.env.local` (and in your hosting environment):
+
+```bash
+ADMIN_PASSWORD=choose-a-strong-password
+SESSION_SECRET=any-long-random-string
+# STORAGE_DIR=/var/data/elitevets   # optional, defaults to ./storage
+```
+
+Data is stored as JSON files (plus uploaded images) in `storage/` via `lib/store.js`. This needs a host
+with a persistent disk — a VPS / `npm start`, or Docker with a volume. On serverless hosts with a
+read-only filesystem (e.g. Vercel), replace the functions in `lib/store.js` with a database; nothing else
+needs to change. Back up the `storage/` folder.
+
+## Other forms
+
+The Donor Registry opens WhatsApp with a prefilled message; the newsletter and job applications open the
+visitor's email app addressed to theelitevets@gmail.com.

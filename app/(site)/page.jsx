@@ -1,4 +1,5 @@
-import Hero from "@/components/Hero";
+import { connection } from "next/server";
+import CareHero from "@/components/CareHero";
 import Stats from "@/components/Stats";
 import ServicesGrid from "@/components/ServicesGrid";
 import AboutSection from "@/components/AboutSection";
@@ -8,11 +9,16 @@ import BloodDonation from "@/components/BloodDonation";
 import Testimonials from "@/components/Testimonials";
 import GalleryPreview from "@/components/GalleryPreview";
 import BookingBand from "@/components/BookingBand";
+import { getContent } from "@/lib/store";
+import { nextAvailableSlot, todayHours } from "@/lib/availability";
 
-export default function HomePage() {
+export default async function HomePage() {
+  await connection(); // content is edited live from /admin
+  const [{ hero }, nextSlot, hours] = await Promise.all([getContent(), nextAvailableSlot(), todayHours()]);
+
   return (
     <>
-      <Hero />
+      <CareHero hero={hero} nextSlot={nextSlot} hours={hours} />
       <Stats />
       <ServicesGrid />
       <AboutSection />

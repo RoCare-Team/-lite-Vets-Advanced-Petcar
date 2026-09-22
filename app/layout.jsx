@@ -1,10 +1,5 @@
 import { Plus_Jakarta_Sans, Lora, Caveat } from "next/font/google";
 import "./globals.css";
-import AnnouncementBar from "@/components/AnnouncementBar";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import MobileBottomBar from "@/components/MobileBottomBar";
-import FloatingActions from "@/components/FloatingActions";
 import RevealObserver from "@/components/ui/RevealObserver";
 import JsonLd from "@/components/ui/JsonLd";
 import { organizationSchema, veterinaryCareSchema } from "@/lib/seo";
@@ -77,21 +72,10 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en-IN" className={`${jakarta.variable} ${lora.variable} ${caveat.variable}`} data-scroll-behavior="smooth">
-      <body className="min-h-dvh overflow-x-clip pb-[calc(4.25rem+env(safe-area-inset-bottom))] font-sans lg:pb-0">
-        <a
-          href="#main"
-          className="sr-only z-[100] rounded-full bg-navy px-5 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
-        >
-          Skip to content
-        </a>
+      <body className="min-h-dvh overflow-x-clip font-sans">
         <JsonLd data={organizationSchema} />
         <JsonLd data={veterinaryCareSchema} />
-        <AnnouncementBar />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <FloatingActions />
-        <MobileBottomBar />
+        {children}
         <RevealObserver />
       </body>
     </html>

@@ -1,6 +1,7 @@
 import { ArrowRight, Home, Phone } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { site } from "@/lib/site";
+import SiteLayout from "./(site)/layout";
 
 export const metadata = {
   title: "Page not found",
@@ -9,6 +10,7 @@ export const metadata = {
 
 export default function NotFound() {
   return (
+    <SiteLayout>
     <section className="section-y bg-cream">
       <div className="container-x max-w-2xl text-center">
         <p className="eyebrow justify-center">Error 404</p>
@@ -29,5 +31,6 @@ export default function NotFound() {
         </div>
       </div>
     </section>
+    </SiteLayout>
   );
 }

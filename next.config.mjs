@@ -4,6 +4,11 @@ import { serviceSlugs } from "./data/service-slugs.mjs";
 const nextConfig = {
   turbopack: { root: import.meta.dirname },
 
+  // Admin image uploads go through a Server Action (limit enforced at 5 MB).
+  experimental: {
+    serverActions: { bodySizeLimit: "6mb" },
+  },
+
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85],

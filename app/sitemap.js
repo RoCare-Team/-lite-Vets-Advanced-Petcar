@@ -13,6 +13,7 @@ export default function sitemap() {
     { path: "/blood-donation-program", priority: 0.7 },
     { path: "/stray-policy", priority: 0.5 },
     { path: "/contact", priority: 0.8 },
+    { path: "/book", priority: 0.9 },
   ];
 
   return [
