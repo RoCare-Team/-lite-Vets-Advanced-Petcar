@@ -14,7 +14,7 @@ export default function Logo({ tone = "dark", className = "", onClick }) {
       <span className={`relative grid size-11 place-items-center rounded-xl bg-white ${light ? "" : "ring-1 ring-navy/5"}`}>
         <Image src={images.logo.src} alt="" width={40} height={34} className="h-[30px] w-auto" priority />
       </span>
-      <span className="flex flex-col leading-none">
+      <span className="flex flex-col leading-none whitespace-nowrap">
         <span className={`font-serif text-[1.2rem] font-semibold tracking-tight sm:text-[1.3rem] ${light ? "text-white" : "text-navy"}`}>
           The Élite Vets
         </span>

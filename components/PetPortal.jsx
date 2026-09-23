@@ -9,9 +9,9 @@ export default function PetPortal({ className = "", onNavigate }) {
 
   return (
     <div
-      className={`flex items-center gap-2.5 rounded-xl border border-line bg-white px-3 py-1.5 shadow-soft ${className}`}
+      className={`flex h-12 items-center gap-2.5 rounded-full border border-line bg-white pr-4 pl-1.5 ${className}`}
     >
-      <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-lg bg-emergency/10 text-emergency">
+      <span aria-hidden="true" className="grid size-9 shrink-0 place-items-center rounded-full bg-emergency/10 text-emergency">
         <UserRound className="size-[18px]" />
       </span>
       <span className="leading-tight whitespace-nowrap">

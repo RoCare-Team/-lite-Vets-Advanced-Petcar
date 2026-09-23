@@ -123,8 +123,8 @@ export default function BookingWizard({ clinics, services, windowDays, today, in
   const canContinue = [Boolean(clinic), Boolean(service), Boolean(date && time)][step] ?? true;
 
   return (
-    <div ref={root} className="grid scroll-mt-28 gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start lg:gap-8">
-      <div className="rounded-panel border border-line bg-white shadow-soft">
+    <div ref={root} className="grid scroll-mt-28 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:items-start lg:gap-8">
+      <div className="min-w-0 rounded-panel border border-line bg-white shadow-soft">
         <Stepper step={step} onJump={(i) => i < step && go(i)} />
 
         <div className="p-5 sm:p-8">
@@ -144,6 +144,7 @@ export default function BookingWizard({ clinics, services, windowDays, today, in
                     onClick={() => {
                       setClinicId(c.id);
                       setTime("");
+                      go(1);
                     }}
                   >
                     <span className="block font-bold text-navy">{c.name}</span>
@@ -163,7 +164,14 @@ export default function BookingWizard({ clinics, services, windowDays, today, in
             <StepSection title="What does your pet need?" hint="Choose the service for this visit.">
               <div className="grid gap-3 sm:grid-cols-2">
                 {services.map((s) => (
-                  <Choice key={s.id} selected={s.id === serviceId} onClick={() => setServiceId(s.id)}>
+                  <Choice
+                    key={s.id}
+                    selected={s.id === serviceId}
+                    onClick={() => {
+                      setServiceId(s.id);
+                      go(2);
+                    }}
+                  >
                     <span className="flex items-baseline justify-between gap-3">
                       <span className="font-bold text-navy">{s.name}</span>
                       {s.price && <span className="shrink-0 text-sm font-semibold text-teal-dark">{s.price}</span>}
@@ -222,7 +230,14 @@ export default function BookingWizard({ clinics, services, windowDays, today, in
                     No slots left on {formatDate(date, { year: false })}. Please try another day.
                   </p>
                 ) : (
-                  <SlotGroups slots={slots} time={time} onPick={setTime} />
+                  <SlotGroups
+                    slots={slots}
+                    time={time}
+                    onPick={(t) => {
+                      setTime(t);
+                      go(3);
+                    }}
+                  />
                 )}
               </div>
             </StepSection>
@@ -305,7 +320,7 @@ export default function BookingWizard({ clinics, services, windowDays, today, in
             </form>
           )}
 
-          <div className="mt-8 flex items-center justify-between gap-3 border-t border-line pt-5">
+          <div className="sticky bottom-0 -mx-5 mt-8 flex items-center justify-between gap-3 border-t border-line bg-white/95 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">
             {step > 0 ? (
               <button
                 type="button"
@@ -319,14 +334,15 @@ export default function BookingWizard({ clinics, services, windowDays, today, in
             )}
 
             {step < 3 ? (
-              <button
-                type="button"
-                disabled={!canContinue}
-                onClick={() => go(step + 1)}
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-teal px-7 font-semibold text-white transition-colors hover:bg-teal-dark disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Continue <ArrowRight aria-hidden="true" className="size-4" />
-              </button>
+              canContinue && (
+                <button
+                  type="button"
+                  onClick={() => go(step + 1)}
+                  className="inline-flex h-12 items-center gap-2 rounded-full bg-teal px-7 font-semibold text-white transition-colors hover:bg-teal-dark"
+                >
+                  Continue <ArrowRight aria-hidden="true" className="size-4" />
+                </button>
+              )
             ) : (
               <button
                 type="submit"
@@ -361,7 +377,7 @@ function Field({ label, required, className = "", children }) {
 
 function Stepper({ step, onJump }) {
   return (
-    <ol className="flex border-b border-line px-3 sm:px-6">
+    <ol className="flex border-b border-line px-1.5 sm:px-6">
       {STEPS.map((label, i) => {
         const state = i < step ? "done" : i === step ? "current" : "todo";
         return (
@@ -371,18 +387,18 @@ function Stepper({ step, onJump }) {
               onClick={() => onJump(i)}
               disabled={i >= step}
               aria-current={state === "current" ? "step" : undefined}
-              className={`flex w-full flex-col items-center gap-1.5 border-b-2 py-4 text-[0.72rem] font-semibold sm:flex-row sm:justify-center sm:gap-2 sm:text-sm ${
+              className={`flex w-full min-w-0 flex-col items-center gap-1.5 border-b-2 px-0.5 py-3.5 text-[0.65rem] leading-tight font-semibold sm:flex-row sm:justify-center sm:gap-2 sm:py-4 sm:text-sm ${
                 state === "current" ? "border-teal text-navy" : state === "done" ? "border-transparent text-teal" : "border-transparent text-muted"
               }`}
             >
               <span
-                className={`grid size-6 place-items-center rounded-full text-xs ${
+                className={`grid size-6 shrink-0 place-items-center rounded-full text-xs ${
                   state === "todo" ? "bg-cream text-muted" : "bg-teal text-white"
                 }`}
               >
                 {state === "done" ? <Check aria-hidden="true" className="size-3.5" /> : i + 1}
               </span>
-              {label}
+              <span className="truncate">{label}</span>
             </button>
           </li>
         );
@@ -436,7 +452,7 @@ function SlotGroups({ slots, time, onPick }) {
       {groups.map((g) => (
         <div key={g.label}>
           <p className="text-sm font-semibold text-navy">{g.label}</p>
-          <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4 xl:grid-cols-5">
+          <div className="mt-2 grid grid-cols-2 gap-2 min-[420px]:grid-cols-3 sm:grid-cols-4 xl:grid-cols-5">
             {g.items.map((s) => (
               <button
                 key={s.time}
@@ -469,17 +485,20 @@ function Summary({ clinic, service, date, time, step }) {
     { icon: Stethoscope, label: "Service", value: service?.name },
     { icon: CalendarDays, label: "Date", value: date && step >= 2 ? formatDate(date) : "" },
     { icon: Clock, label: "Time", value: time ? formatTime(time) : "" },
-  ];
+  ].filter((row) => row.value);
+
+  if (!rows.length) return null;
+
   return (
     <aside className={`rounded-panel border border-line bg-white p-5 shadow-soft sm:p-6 lg:sticky ${inModal ? "lg:top-0" : "lg:top-28"}`}>
       <h2 className="text-lg">Booking summary</h2>
       <dl className="mt-4 grid gap-3.5">
         {rows.map(({ icon: Icon, label, value }) => (
           <div key={label} className="flex items-start gap-3">
-            <Icon aria-hidden="true" className={`mt-0.5 size-5 shrink-0 ${value ? "text-teal" : "text-muted/40"}`} />
+            <Icon aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-teal" />
             <div>
               <dt className="text-xs text-muted">{label}</dt>
-              <dd className={`text-sm font-semibold ${value ? "text-navy" : "text-muted/60"}`}>{value || "Not selected"}</dd>
+              <dd className="text-sm font-semibold text-navy">{value}</dd>
             </div>
           </div>
         ))}

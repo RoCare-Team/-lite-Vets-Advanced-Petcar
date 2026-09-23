@@ -12,6 +12,19 @@ import { WhatsAppIcon } from "./ui/BrandIcons";
 import { mainNav, site, bookingLink, whatsappLink } from "@/lib/site";
 import { specialtyServices, regularServices, serviceHref } from "@/data/services";
 
+// Nav labels carry the "Élite" prefix; it is hidden on narrower screens so the
+// bar keeps its spacing instead of overflowing.
+function NavLabel({ label }) {
+  const [, prefix, rest] = /^(Élite)\s+(.*)$/.exec(label) || [];
+  if (!prefix) return label;
+  return (
+    <>
+      <span className="hidden 2xl:inline">{prefix}&nbsp;</span>
+      {rest}
+    </>
+  );
+}
+
 function isActive(pathname, href) {
   if (href === "/") return pathname === "/";
   if (href === "/services") {
@@ -75,21 +88,19 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b transition-[background-color,box-shadow,border-color] duration-300 ${
-          scrolled || megaOpen
-            ? "border-line bg-white/95 shadow-[0_8px_30px_-18px_rgb(11_43_53/0.35)] backdrop-blur-md"
-            : "border-transparent bg-cream/90 backdrop-blur-sm"
+        className={`sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur-md transition-shadow duration-300 ${
+          scrolled || megaOpen ? "shadow-[0_8px_30px_-18px_rgb(16_66_111/0.35)]" : ""
         }`}
       >
-        <div className="container-x flex h-16 items-center justify-between gap-4 lg:h-[4.5rem]">
+        <div className="container-x flex h-16 items-center justify-between gap-4 lg:h-[4.75rem] lg:grid lg:grid-cols-[auto_1fr_auto]">
           <Logo />
 
           {/* Desktop navigation */}
-          <nav aria-label="Main" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
+          <nav aria-label="Main" className="hidden lg:block lg:justify-self-center">
+            <ul className="flex items-center gap-0.5 xl:gap-1.5">
               {mainNav.map((item) => {
                 const active = isActive(pathname, item.href);
-                const linkClass = `relative flex h-10 items-center gap-1 rounded-full px-3 text-[0.92rem] font-medium whitespace-nowrap transition-colors xl:px-3.5 ${
+                const linkClass = `relative flex h-10 items-center gap-1 rounded-full px-2.5 text-[0.9rem] font-medium whitespace-nowrap transition-colors xl:px-3.5 xl:text-[0.94rem] ${
                   active ? "text-teal" : "text-ink/80 hover:text-navy"
                 }`;
 
@@ -111,7 +122,7 @@ export default function Header() {
                         // Keyboard (detail 0) toggles; mouse/touch clicks open (hover already handles mouse).
                         onClick={(e) => (e.detail === 0 ? setMegaOpen((o) => !o) : openMega())}
                       >
-                        {item.label}
+                        <NavLabel label={item.label} />
                         <ChevronDown
                           aria-hidden="true"
                           className={`size-4 transition-transform duration-200 ${megaOpen ? "rotate-180" : ""}`}
@@ -125,7 +136,7 @@ export default function Header() {
                 return (
                   <li key={item.href}>
                     <Link href={item.href} className={linkClass} aria-current={active ? "page" : undefined}>
-                      {item.label}
+                      <NavLabel label={item.label} />
                       {active && (
                         <span aria-hidden="true" className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-teal" />
                       )}
@@ -136,18 +147,9 @@ export default function Header() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-2 lg:justify-self-end">
             <SiteSearch />
-            <a
-              href={site.phone.primaryHref}
-              className="hidden h-11 items-center gap-2.5 rounded-full px-3 text-sm font-semibold whitespace-nowrap text-navy transition-colors hover:text-teal 2xl:flex"
-            >
-              <span className="grid size-9 place-items-center rounded-full bg-teal-soft text-teal">
-                <Phone aria-hidden="true" className="size-4" />
-              </span>
-              {site.phone.primary}
-            </a>
-            <PetPortal className="hidden lg:flex" />
+            <PetPortal className="hidden xl:flex" />
             <Button href={bookingLink} size="md" className="hidden lg:inline-flex">
               <CalendarCheck aria-hidden="true" className="size-4" />
               Book Appointment
