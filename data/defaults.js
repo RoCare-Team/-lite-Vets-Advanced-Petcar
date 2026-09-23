@@ -8,8 +8,6 @@ export const defaultContent = {
   hero: {
     title: "Care services for *your pet*",
     subtitle: "Book a visit at your nearest clinic in under a minute — pick a service, a date and a time that suits you.",
-    ctaLabel: "Book an Appointment",
-    highlights: ["Experienced veterinarians", "Advanced diagnostics", "24/7 emergency care"],
     // Tiles use icons (data/tile-icons.js). Set an image in the admin panel to
     // show a picture instead. Banner photos are the clinic's own treatment shots.
     tiles: [
@@ -26,7 +24,7 @@ export const defaultContent = {
     banners: [
       { image: "/images/gallery_1/gallery_10.webp", alt: "Élite Vets veterinarian preparing a vaccination", caption: "Vaccination", focus: "center" },
       { image: "/images/gallery_1/gallery_8.webp", alt: "Groomer styling a Shih Tzu at The Élite Vets", caption: "Grooming", focus: "top" },
-      { image: "/images/gallery_1/gallery_12.webp", alt: "Veterinarian examining a Labrador with a stethoscope", caption: "Expert treatment", focus: "center" },
+      { image: "/images/gallery_1/gallery_12.webp", alt: "Élite Vets veterinarian comforting a Labrador during a check-up", caption: "Compassionate care", focus: "center" },
     ],
   },
   services: [

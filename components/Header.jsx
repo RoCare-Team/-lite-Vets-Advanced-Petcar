@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ArrowRight, ChevronDown, Menu, Phone, Siren, X, CalendarCheck } from "lucide-react";
 import Logo from "./Logo";
 import SiteSearch from "./SiteSearch";
+import PetPortal from "./PetPortal";
 import Button from "./ui/Button";
 import { WhatsAppIcon } from "./ui/BrandIcons";
 import { mainNav, site, bookingLink, whatsappLink } from "@/lib/site";
@@ -146,6 +147,7 @@ export default function Header() {
               </span>
               {site.phone.primary}
             </a>
+            <PetPortal className="hidden lg:flex" />
             <Button href={bookingLink} size="md" className="hidden lg:inline-flex">
               <CalendarCheck aria-hidden="true" className="size-4" />
               Book Appointment
@@ -395,6 +397,7 @@ function MobileMenu({ open, onClose, pathname }) {
         </nav>
 
         <div className="grid shrink-0 gap-2.5 border-t border-line bg-white px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          <PetPortal className="w-full justify-center" onNavigate={onClose} />
           <Button href={bookingLink} size="lg" className="w-full">
             <CalendarCheck aria-hidden="true" className="size-5" /> Book Appointment
           </Button>

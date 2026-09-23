@@ -153,8 +153,6 @@ export async function saveHomeContent(input) {
     hero: {
       title: str(hero.title, 120) || current.hero.title,
       subtitle: str(hero.subtitle, 300),
-      ctaLabel: str(hero.ctaLabel, 40),
-      highlights: (hero.highlights || []).map((h) => str(h, 60)).filter(Boolean).slice(0, 6),
       tiles: (hero.tiles || [])
         .map((t) => ({
           id: str(t.id, 20) || newId(3),

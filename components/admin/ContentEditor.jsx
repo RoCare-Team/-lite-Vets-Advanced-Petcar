@@ -38,27 +38,16 @@ export default function ContentEditor({ initial, library }) {
         ))}
       </datalist>
 
-      <Card title="Hero text" hint="The heading and intro are not shown on the page — they are the title and description Google shows for your homepage.">
+      <Card title="Hero text" hint="Shown at the top of the homepage, and used as the title and description Google shows for it.">
         <div className="grid gap-4 sm:grid-cols-2">
-          <Label text="Page heading (search results + screen readers)" className="sm:col-span-2">
+          <Label text="Page heading" className="sm:col-span-2">
             <input value={hero.title} onChange={(e) => setHero({ title: e.target.value })} className={inputClass} />
           </Label>
-          <Label text="Google description" className="sm:col-span-2">
+          <Label text="Intro line (also the Google description)" className="sm:col-span-2">
             <textarea
               rows={2}
               value={hero.subtitle}
               onChange={(e) => setHero({ subtitle: e.target.value })}
-              className={`${inputClass} h-auto py-2.5`}
-            />
-          </Label>
-          <Label text="Booking button label">
-            <input value={hero.ctaLabel} onChange={(e) => setHero({ ctaLabel: e.target.value })} className={inputClass} />
-          </Label>
-          <Label text="Highlights (one per line)">
-            <textarea
-              rows={3}
-              value={hero.highlights.join("\n")}
-              onChange={(e) => setHero({ highlights: e.target.value.split("\n") })}
               className={`${inputClass} h-auto py-2.5`}
             />
           </Label>
