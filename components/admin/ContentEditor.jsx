@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { ArrowDown, ArrowUp, ImageUp, Loader2, Plus, Save, Trash2 } from "lucide-react";
 import { saveHomeContent, uploadImage } from "@/app/admin/actions";
 import { Label, inputClass } from "./fields";
+import { tileIcons, tileIconNames, tileColors, tileColorNames } from "@/data/tile-icons";
 
 let seq = 0;
 const tempId = () => `new${Date.now().toString(36)}${seq++}`;
@@ -37,12 +38,12 @@ export default function ContentEditor({ initial, library }) {
         ))}
       </datalist>
 
-      <Card title="Hero text">
+      <Card title="Hero text" hint="The heading and intro are not shown on the page — they are the title and description Google shows for your homepage.">
         <div className="grid gap-4 sm:grid-cols-2">
-          <Label text="Heading — wrap words in *asterisks* to colour them teal" className="sm:col-span-2">
+          <Label text="Page heading (search results + screen readers)" className="sm:col-span-2">
             <input value={hero.title} onChange={(e) => setHero({ title: e.target.value })} className={inputClass} />
           </Label>
-          <Label text="Intro line" className="sm:col-span-2">
+          <Label text="Google description" className="sm:col-span-2">
             <textarea
               rows={2}
               value={hero.subtitle}
@@ -64,41 +65,74 @@ export default function ContentEditor({ initial, library }) {
         </div>
       </Card>
 
-      <Card title="Service tiles" hint="The grid of services on the homepage. Link a tile to /book?service=<service ID> to open booking with that service selected.">
+      <Card
+        title="Service tiles"
+        hint="The grid on the homepage. Each tile shows an icon — add an image only if you want a picture instead. Link a tile to /book?service=<service ID> to open booking with that service selected."
+      >
         <Rows
           items={hero.tiles}
           onChange={(list) => setList("tiles", list)}
-          blank={() => ({ id: tempId(), label: "", badge: "", image: "", href: "/book" })}
+          blank={() => ({ id: tempId(), label: "", badge: "", icon: "paw-print", image: "", href: "/book" })}
           addLabel="Add tile"
-          render={(tile, update) => (
-            <div className="grid gap-3 sm:grid-cols-[7rem_1fr]">
-              <ImageField value={tile.image} onChange={(image) => update({ image })} compact />
-              <div className="grid gap-3 sm:grid-cols-3">
-                <Label text="Label">
-                  <input value={tile.label} onChange={(e) => update({ label: e.target.value })} className={inputClass} />
-                </Label>
-                <Label text="Badge (optional)">
-                  <input
-                    value={tile.badge}
-                    placeholder="e.g. 20% Off"
-                    onChange={(e) => update({ badge: e.target.value })}
-                    className={inputClass}
-                  />
-                </Label>
-                <Label text="Link">
-                  <input value={tile.href} onChange={(e) => update({ href: e.target.value })} className={inputClass} />
-                </Label>
-                <Label text="Image path or URL" className="sm:col-span-3">
-                  <input
-                    list="image-library"
-                    value={tile.image}
-                    onChange={(e) => update({ image: e.target.value })}
-                    className={inputClass}
-                  />
-                </Label>
+          render={(tile, update) => {
+            const Icon = tileIcons[tile.icon] || tileIcons["paw-print"];
+            const colour = tileColors[tile.color] || tileColors.blue;
+            return (
+              <div className="grid gap-3 sm:grid-cols-[7rem_1fr]">
+                <div className="grid aspect-square place-items-center rounded-xl ring-1 ring-navy/5" style={{ background: colour.soft }}>
+                  {tile.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={tile.image} alt="" className="size-full rounded-xl object-cover" />
+                  ) : (
+                    <Icon aria-hidden="true" className="size-1/2" style={{ color: colour.ink }} strokeWidth={1.5} />
+                  )}
+                </div>
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <Label text="Label">
+                    <input value={tile.label} onChange={(e) => update({ label: e.target.value })} className={inputClass} />
+                  </Label>
+                  <Label text="Badge (optional)">
+                    <input
+                      value={tile.badge}
+                      placeholder="e.g. 20% Off"
+                      onChange={(e) => update({ badge: e.target.value })}
+                      className={inputClass}
+                    />
+                  </Label>
+                  <Label text="Link">
+                    <input value={tile.href} onChange={(e) => update({ href: e.target.value })} className={inputClass} />
+                  </Label>
+                  <Label text="Icon">
+                    <select value={tile.icon || "paw-print"} onChange={(e) => update({ icon: e.target.value })} className={inputClass}>
+                      {tileIconNames.map((name) => (
+                        <option key={name} value={name}>
+                          {name.replace(/-/g, " ")}
+                        </option>
+                      ))}
+                    </select>
+                  </Label>
+                  <Label text="Colour">
+                    <select value={tile.color || "blue"} onChange={(e) => update({ color: e.target.value })} className={inputClass}>
+                      {tileColorNames.map((name) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </select>
+                  </Label>
+                  <Label text="Image instead of icon (optional)" className="sm:col-span-3">
+                    <input
+                      list="image-library"
+                      value={tile.image}
+                      placeholder="Leave empty to show the icon"
+                      onChange={(e) => update({ image: e.target.value })}
+                      className={inputClass}
+                    />
+                  </Label>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          }}
         />
       </Card>
 
@@ -113,6 +147,13 @@ export default function ContentEditor({ initial, library }) {
                 <ImageField value={banner.image} onChange={(image) => update({ image })} />
                 <Label text="Image path or URL">
                   <input list="image-library" value={banner.image} onChange={(e) => update({ image: e.target.value })} className={inputClass} />
+                </Label>
+                <Label text="Photo focus">
+                  <select value={banner.focus || "center"} onChange={(e) => update({ focus: e.target.value })} className={inputClass}>
+                    <option value="top">Top of photo</option>
+                    <option value="center">Middle</option>
+                    <option value="bottom">Bottom of photo</option>
+                  </select>
                 </Label>
                 <Label text="Caption on photo (optional)">
                   <input value={banner.caption || ""} onChange={(e) => update({ caption: e.target.value })} className={inputClass} />

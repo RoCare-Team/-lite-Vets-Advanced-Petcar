@@ -10,7 +10,16 @@ import Testimonials from "@/components/Testimonials";
 import GalleryPreview from "@/components/GalleryPreview";
 import BookingBand from "@/components/BookingBand";
 import { getContent } from "@/lib/store";
+import { site } from "@/lib/site";
 import { nextAvailableSlot, todayHours } from "@/lib/availability";
+
+// The hero heading is hidden on the page (screen readers and search engines
+// still read it); the intro line becomes the homepage description. The title
+// stays the one set in app/layout.jsx.
+export async function generateMetadata() {
+  const { hero } = await getContent();
+  return { description: hero.subtitle || site.description };
+}
 
 export default async function HomePage() {
   await connection(); // content is edited live from /admin

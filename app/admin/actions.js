@@ -17,6 +17,7 @@ import {
   updateBooking,
 } from "@/lib/store";
 import { toMinutes } from "@/lib/slots";
+import { tileIcons, tileColors } from "@/data/tile-icons";
 
 // ─────────────────────────── Session ───────────────────────────
 
@@ -155,13 +156,22 @@ export async function saveHomeContent(input) {
       ctaLabel: str(hero.ctaLabel, 40),
       highlights: (hero.highlights || []).map((h) => str(h, 60)).filter(Boolean).slice(0, 6),
       tiles: (hero.tiles || [])
-        .map((t) => ({ id: str(t.id, 20) || newId(3), label: str(t.label, 40), badge: str(t.badge, 20), image: safeImage(t.image), href: safeHref(t.href) }))
+        .map((t) => ({
+          id: str(t.id, 20) || newId(3),
+          label: str(t.label, 40),
+          badge: str(t.badge, 20),
+          icon: tileIcons[t.icon] ? t.icon : "paw-print",
+          color: tileColors[t.color] ? t.color : "blue",
+          image: safeImage(t.image),
+          href: safeHref(t.href),
+        }))
         .filter((t) => t.label)
         .slice(0, 12),
       banners: [0, 1, 2].map((i) => ({
         image: safeImage(hero.banners?.[i]?.image),
         alt: str(hero.banners?.[i]?.alt, 150),
         caption: str(hero.banners?.[i]?.caption, 40),
+        focus: ["top", "center", "bottom"].includes(hero.banners?.[i]?.focus) ? hero.banners[i].focus : "center",
       })),
     },
     services,

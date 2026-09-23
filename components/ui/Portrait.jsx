@@ -27,7 +27,7 @@ export default function Portrait({ person, sizes = "(min-width: 1024px) 25vw, 50
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_1px_1px,rgb(15_139_141/0.25)_1px,transparent_0)] [background-size:22px_22px]"
+        className="absolute inset-0 opacity-40 [background-image:radial-gradient(circle_at_1px_1px,rgb(23_99_168/0.25)_1px,transparent_0)] [background-size:22px_22px]"
       />
       <span
         aria-hidden="true"

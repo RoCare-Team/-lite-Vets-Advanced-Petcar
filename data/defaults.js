@@ -10,23 +10,23 @@ export const defaultContent = {
     subtitle: "Book a visit at your nearest clinic in under a minute — pick a service, a date and a time that suits you.",
     ctaLabel: "Book an Appointment",
     highlights: ["Experienced veterinarians", "Advanced diagnostics", "24/7 emergency care"],
-    // Clinic photos show the Élite Vets team; /images/hero/* are free-licence
-    // Unsplash photos of Indian pet parents (unsplash.com/license).
+    // Tiles use icons (data/tile-icons.js). Set an image in the admin panel to
+    // show a picture instead. Banner photos are the clinic's own treatment shots.
     tiles: [
-      { id: "t1", label: "Consultation", badge: "", image: "/images/gallery_1/gallery_12.webp", href: "/book?service=consultation" },
-      { id: "t2", label: "Grooming", badge: "", image: "/images/gallery_1/gallery_8.webp", href: "/book?service=grooming" },
-      { id: "t3", label: "Vaccination", badge: "", image: "/images/gallery_1/gallery_10.webp", href: "/book?service=vaccination" },
-      { id: "t4", label: "Emergency", badge: "24/7", image: "/images/gallery_1/gallery_7.webp", href: "/24-7-emergency-critical-care-and-hospitalization" },
-      { id: "t5", label: "Surgery", badge: "", image: "/images/gallery_2/gallery_4.webp", href: "/book?service=surgery" },
-      { id: "t6", label: "Diagnostics", badge: "", image: "/images/hero/kitten-checkup.jpg", href: "/book?service=diagnostics" },
-      { id: "t7", label: "Dental Care", badge: "", image: "/images/hero/boy-puppy.jpg", href: "/book?service=dental" },
-      { id: "t8", label: "Pharmacy", badge: "", image: "/images/hero/parent-sari.jpg", href: "/pet-pharmacy-and-pet-store" },
-      { id: "t9", label: "E-Consultation", badge: "Online", image: "/images/hero/video-consult.jpg", href: "/book?service=video" },
+      { id: "t1", color: "blue", label: "Consultation", badge: "", icon: "stethoscope", image: "", href: "/book?service=consultation" },
+      { id: "t2", color: "pink", label: "Grooming", badge: "", icon: "scissors", image: "", href: "/book?service=grooming" },
+      { id: "t3", color: "green", label: "Vaccination", badge: "", icon: "syringe", image: "", href: "/book?service=vaccination" },
+      { id: "t4", color: "rose", label: "Emergency", badge: "24/7", icon: "siren", image: "", href: "/24-7-emergency-critical-care-and-hospitalization" },
+      { id: "t5", color: "cyan", label: "Surgery", badge: "", icon: "briefcase-medical", image: "", href: "/book?service=surgery" },
+      { id: "t6", color: "violet", label: "Diagnostics", badge: "", icon: "microscope", image: "", href: "/book?service=diagnostics" },
+      { id: "t7", color: "amber", label: "Dental Care", badge: "", icon: "smile", image: "", href: "/book?service=dental" },
+      { id: "t8", color: "orange", label: "Pharmacy", badge: "", icon: "pill", image: "", href: "/pet-pharmacy-and-pet-store" },
+      { id: "t9", color: "slate", label: "E-Consultation", badge: "Online", icon: "video", image: "", href: "/book?service=video" },
     ],
     banners: [
-      { image: "/images/gallery_2/new_gallery_2.webp", alt: "Reception and waiting lounge at The Élite Vets, Sector 45", caption: "Our clinic · Sector 45" },
-      { image: "/images/hero/parent-boxer.jpg", alt: "Young man with his Boxer dog", caption: "Loved by pet parents" },
-      { image: "/images/hero/parent-puppy.jpg", alt: "Smiling pet parent lifting a puppy", caption: "" },
+      { image: "/images/gallery_1/gallery_10.webp", alt: "Élite Vets veterinarian preparing a vaccination", caption: "Vaccination", focus: "center" },
+      { image: "/images/gallery_1/gallery_8.webp", alt: "Groomer styling a Shih Tzu at The Élite Vets", caption: "Grooming", focus: "top" },
+      { image: "/images/gallery_1/gallery_12.webp", alt: "Veterinarian examining a Labrador with a stethoscope", caption: "Expert treatment", focus: "center" },
     ],
   },
   services: [

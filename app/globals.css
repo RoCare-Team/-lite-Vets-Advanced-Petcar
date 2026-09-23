@@ -2,17 +2,21 @@
 
 /* ─────────────────────────── Design tokens ─────────────────────────── */
 @theme {
-  --color-navy: #0b2b35;
-  --color-navy-deep: #08232c;
-  --color-teal: #0f8b8d;
-  --color-teal-dark: #0b7173;
-  --color-teal-soft: #ddf4f1;
-  --color-cream: #f8f7f2;
-  --color-ink: #17343b;
-  --color-muted: #64777c;
-  --color-line: #e4e9e7;
-  --color-emergency: #d94b4b;
-  --color-emergency-dark: #bf3a3a;
+  /* Brand blues sampled from the Élite Vets logo: deep #165090, cyan #0faeda.
+     Token names are historical — "navy" is the deep brand blue and "teal" the
+     primary blue used for buttons, links and icons. */
+  --color-navy: #10426f;
+  --color-navy-deep: #0a3057;
+  --color-teal: #1763a8;
+  --color-teal-dark: #124d84;
+  --color-teal-soft: #e2f0fb;
+  --color-cyan: #0faeda;
+  --color-cream: #f5f9fd;
+  --color-ink: #16324c;
+  --color-muted: #5d7186;
+  --color-line: #dce7f1;
+  --color-emergency: #d6453f;
+  --color-emergency-dark: #b93832;
 
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-lora), Georgia, serif;
@@ -21,9 +25,9 @@
   --radius-card: 1.25rem;
   --radius-panel: 2rem;
 
-  --shadow-soft: 0 1px 2px rgb(11 43 53 / 0.04), 0 8px 24px -12px rgb(11 43 53 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(11 43 53 / 0.04), 0 24px 48px -20px rgb(11 43 53 / 0.25);
-  --shadow-float: 0 20px 50px -18px rgb(8 35 44 / 0.35);
+  --shadow-soft: 0 1px 2px rgb(16 66 111 / 0.05), 0 8px 24px -12px rgb(16 66 111 / 0.16);
+  --shadow-lift: 0 2px 4px rgb(16 66 111 / 0.05), 0 24px 48px -20px rgb(16 66 111 / 0.28);
+  --shadow-float: 0 20px 50px -18px rgb(10 48 87 / 0.38);
 
   --animate-marquee: marquee 40s linear infinite;
 }

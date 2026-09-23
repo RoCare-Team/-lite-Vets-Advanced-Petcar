@@ -5,12 +5,12 @@ const base =
 
 const variants = {
   primary:
-    "bg-teal text-white shadow-[0_10px_24px_-10px_rgb(15_139_141/0.7)] hover:bg-teal-dark hover:shadow-[0_14px_28px_-12px_rgb(15_139_141/0.8)] focus-visible:outline-teal",
+    "bg-teal text-white shadow-[0_10px_24px_-10px_rgb(23_99_168/0.7)] hover:bg-teal-dark hover:shadow-[0_14px_28px_-12px_rgb(23_99_168/0.8)] focus-visible:outline-teal",
   dark: "bg-navy text-white hover:bg-navy-deep focus-visible:outline-navy",
   outline:
     "border border-navy/15 bg-white text-navy hover:border-navy/30 hover:bg-cream focus-visible:outline-teal",
   emergency:
-    "bg-emergency text-white shadow-[0_10px_24px_-10px_rgb(217_75_75/0.7)] hover:bg-emergency-dark focus-visible:outline-emergency",
+    "bg-emergency text-white shadow-[0_10px_24px_-10px_rgb(214_69_63/0.7)] hover:bg-emergency-dark focus-visible:outline-emergency",
   "emergency-outline":
     "border border-emergency/30 bg-white text-emergency hover:border-emergency hover:bg-emergency/5 focus-visible:outline-emergency",
   light: "bg-white text-navy hover:bg-teal-soft focus-visible:outline-white",
